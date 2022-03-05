@@ -1,0 +1,21 @@
+version: 3.7
+services:
+
+  webpack:
+    image: node:16.14
+    volumes:
+      - ./:/app:delegated
+    working_dir: /app
+    command: npm run dev
+    ports:
+     - 8080:8080
+
+  node-webpack:
+    image: node:16.14
+    volumes:
+      - ./:/app:delegated
+    working_dir: /app
+    command: npm run node-dev
+    ports:
+    - 8081:8081
+    - 9229:9229

@@ -1,0 +1,9 @@
+{
+    "extends":"stylelint-config-standard",
+    "rules": {
+        "no-missing-end-of-source-newling": null,
+        "no-eol-whitespace": null,
+        "no-empty-first-line": null,
+        "declaration-no-important": true
+    }
+}
