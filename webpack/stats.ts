@@ -1,7 +1,5 @@
-import path from 'path';
-
 export default {
     colors: true,
-    erors: true,
+    errors: true,
     warnings: true
 }

@@ -12,9 +12,9 @@ export default [
                     browsers: [
                         'Chrome >= 61',
                         'Safari >= 11',
-                        'iOS => 11',
+                        'iOS >= 11',
                         'Firefox >= 60',
-                        'Edge => 79'
+                        'Edge >= 79'
                     ]
                 }
             }
