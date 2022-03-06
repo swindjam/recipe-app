@@ -1,8 +1,9 @@
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import { MinifyOptions } from 'terser';
 
 export default (minimize = true) => {
-    let minimizer = [];
+    let minimizer: (TerserPlugin<MinifyOptions> | CssMinimizerPlugin<CssMinimizerPlugin.CssNanoOptionsExtended>)[] = [];
 
     if (minimize) {
         minimizer = [
