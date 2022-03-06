@@ -1,3 +1,3 @@
 export default {
-    'api': './src/api/index'
+    'api': './src/api/server'
 }

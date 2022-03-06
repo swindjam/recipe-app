@@ -5,4 +5,4 @@ docker:
 	docker compose up
 
 test:
-	(cd cypress && npm run cypress)
+	npm run cypress

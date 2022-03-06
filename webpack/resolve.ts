@@ -1,4 +1,4 @@
 export default {
     modules: ['src', 'node_modules'],
-    extensions: ['.ts', '.tsx', '.css', '.html']
+    extensions: ['.js', '.ts', '.tsx', '.css', '.html']
 }
