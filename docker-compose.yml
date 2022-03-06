@@ -42,6 +42,6 @@ services:
     environment:
       DB_USER: 'root'
       DB_PASSWORD: 'password'
-      DB_HOST: 'docker.host.internal'
+      DB_HOST: 'host.docker.internal'
       DB_PORT: 27017
       DB_NAME: 'recipe_db'

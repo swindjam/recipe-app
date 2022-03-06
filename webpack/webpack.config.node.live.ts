@@ -1,4 +1,3 @@
-import WebpackShellPluginNext from 'webpack-shell-plugin-next';
 import context from './context';
 import entry from './nodeEntry';
 import output from './nodeOutput';

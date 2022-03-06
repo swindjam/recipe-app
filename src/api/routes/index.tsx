@@ -7,7 +7,7 @@ import template from '../template.html';
 import DataSource from '../../types/DataSource';
 
 export default (dataSource: DataSource) =>  (req: Request, res: Response) => {
-    const recipes = dataSource.getRecipes();
+    const recipes = dataSource.getRecipes(null, null);
 
     res.send(
         mustache.render(template, {
