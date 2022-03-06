@@ -28,14 +28,14 @@ services:
     ports:
       - 8080:8080
 
-  node-webpack:
+  node:
     depends_on:
       - mongodb
     image: node:16.14
     volumes:
       - ./:/app:delegated
     working_dir: /app
-    command: npm run node-dev
+    command: npm run node-ts-dev
     ports:
       - 8081:8081
       - 9229:9229
