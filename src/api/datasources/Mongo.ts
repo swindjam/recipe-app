@@ -4,8 +4,6 @@ import Recipe from '../../types/Recipe';
 
 export default class MongoDataSource implements DataSource {
 
-    protected db;
-
     constructor() {
         this.connectToDB();
     }
@@ -26,7 +24,7 @@ export default class MongoDataSource implements DataSource {
         };
 
         try {
-            this.db = await mongoose.connect(
+            await mongoose.connect(
                 config.url,
                 {
                     user: config.user,
@@ -57,8 +55,6 @@ export default class MongoDataSource implements DataSource {
     }
 
     async saveRecipe(recipe: Recipe): Promise<void> {
-        console.log(this.db)
-
         const RecipeModel = this.getRecipeModel();
         const recipeToSave = new RecipeModel();
         recipeToSave.name = recipe.name;
@@ -70,12 +66,12 @@ export default class MongoDataSource implements DataSource {
     }
 
     async deleteRecipe(name: string): Promise<void> {
-        console.log(this.db)
+        const RecipeModel = this.getRecipeModel();
+        await RecipeModel.findByIdAndRemove(name);
+        console.log('Recipe deleted');
     }
 
     async getRecipes(name: string | null, ingredient: string | null): Promise<Recipe[]> {
-        console.log(this.db)
-
         const RecipeModel = this.getRecipeModel();
         const docs = await RecipeModel.find({
             name,
@@ -83,29 +79,5 @@ export default class MongoDataSource implements DataSource {
         });
 
         return docs;
-
-        // const recipes = [
-        //     {
-        //         name: 'Cake',
-        //         ingredients: [
-        //             {
-        //                 name: 'flour',
-        //                 amount: 400,
-        //                 unit: 'grams'
-        //             },
-        //             {
-        //                 name: 'sugar',
-        //                 amount: 200,
-        //                 unit: 'grams'
-        //             }
-        //         ],
-        //         steps: [
-        //             'Mix in bowl',
-        //             'Put in oven',
-        //             'Cook for 20mins at 180c'
-        //         ]
-        //     }
-        // ];
-        // return recipes;
     }
 }

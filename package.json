@@ -2,7 +2,6 @@
   "name": "recipe-app",
   "version": "1.0.0",
   "description": "",
-  "main": "",
   "scripts": {
     "dev": "NODE_ENV=development webpack serve --config webpack/webpack.config.dev.ts",
     "node-dev": "NODE_ENV=development webpack --config webpack/webpack.config.node.dev.ts",
@@ -56,6 +55,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.0",
+    "node-gyp": "^9.0.0",
     "nodemon": "^2.0.15",
     "path": "^0.12.7",
     "postcss": "^8.4.7",
