@@ -1,10 +1,7 @@
 import {Request, Response} from 'express';
-import getRecipes from '../getRecipes';
+import DataSource from '../../types/DataSource';
 
-export default (req: Request, res: Response) => {
-
-    //  TODO get parameters and search recipes
-
-    const recipes = getRecipes();
+export default (dataSource: DataSource) =>  (req: Request, res: Response) => {
+    dataSource.deleteRecipe(req.body.recipe_name);
     res.end();
 };

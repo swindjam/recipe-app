@@ -1,10 +1,7 @@
 import {Request, Response} from 'express';
-import getRecipes from '../getRecipes';
+import DataSource from '../../types/DataSource';
 
 export default (dataSource: DataSource) => (req: Request, res: Response) => {
-
-    //  TODO get parameters and search recipes
-
-    const recipes = getRecipes();
+    dataSource.saveRecipe(req.body.recipe)
     res.end();
 };

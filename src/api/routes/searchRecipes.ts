@@ -1,11 +1,13 @@
 import {Request, Response} from 'express';
-import getRecipes from '../getRecipes';
+import DataSource from '../../types/DataSource';
 
-export default (req: Request, res: Response) => {
+export default (dataSource: DataSource) =>  (req: Request, res: Response) => {
 
-    //  TODO get parameters and search recipes
+    // Get parameters for the query, then use that to search for recipes
+    const name = req.query.recipe_name;
+    const ingredient = req.query.ingredient;
+    const recipes = dataSource.getRecipes(name ? String(name) : null, ingredient ? String(ingredient) : null);
 
-    const recipes = getRecipes();
     res.json({
         recipes
     });

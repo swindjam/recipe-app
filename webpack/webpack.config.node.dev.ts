@@ -37,6 +37,7 @@ module.exports = {
         })
     ],
     devtool,
+    watch: true,
     watchOptions: {
         ignored: /node_modules/,
         poll: 500

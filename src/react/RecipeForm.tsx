@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, TextField, Paper, Button, Divider, Select, MenuItem } from '@mui/material';
 import useRecipe from './hooks/useRecipe';
 import Recipe from '../types/Recipe';
 import postData from './helpers/postData';
 
 interface Props {
-    defaultRecipe?: Recipe
+    defaultRecipe?: Recipe | null;
+    afterSubmit?: () => void;
 };
 
-const RecipeForm = ({ defaultRecipe }: Props): JSX.Element => {
+const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
     if (!defaultRecipe) {
         defaultRecipe = {
             name: '',
@@ -69,6 +70,7 @@ const RecipeForm = ({ defaultRecipe }: Props): JSX.Element => {
         postData('/save', {
             recipe: recipeToSave
         });
+        afterSubmit && afterSubmit();
     };
 
     return (
@@ -161,7 +163,7 @@ const RecipeForm = ({ defaultRecipe }: Props): JSX.Element => {
                         color="primary"
                         onClick={saveRecipe}
                     >
-                        save
+                        Save
                     </Button>
                 </form>
             </Paper>

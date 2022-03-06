@@ -17,7 +17,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./data:/data/db:delegated      
+      - ./data:/data/db:delegated
 
   webpack:
     image: node:16.14

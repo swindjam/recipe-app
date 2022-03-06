@@ -3,11 +3,11 @@ import {Request, Response} from 'express';
 import React from 'react';
 import mustache from 'mustache';
 import App from '../../react/App';
-import template from '../template.html';import getRecipes from '../getRecipes';
-;
+import template from '../template.html';
+import DataSource from '../../types/DataSource';
 
-export default (req: Request, res: Response) => {
-    const recipes = getRecipes();
+export default (dataSource: DataSource) =>  (req: Request, res: Response) => {
+    const recipes = dataSource.getRecipes();
 
     res.send(
         mustache.render(template, {
