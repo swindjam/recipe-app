@@ -16,6 +16,7 @@ export default class MongoDataSource implements DataSource {
         };
 
         try {
+            console.log('Connecting to DB', config);
             await mongoose.connect(
                 config.url,
                 {
