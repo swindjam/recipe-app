@@ -1,11 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import DataSource from "../../types/DataSource";
 import Recipe from '../../types/Recipe';
+import getRecipeModel from './getRecipeModel';
 
 export default class MongoDataSource implements DataSource {
 
+    protected recipeModel: Model<Recipe>;
+
     constructor() {
         this.connectToDB();
+        this.recipeModel = getRecipeModel();
     }
 
     async connectToDB(): Promise<void> {
@@ -29,50 +33,49 @@ export default class MongoDataSource implements DataSource {
         }
     }
 
-    getRecipeModel() {
-        const Schema = mongoose.Schema;
-
-        const Ingredient = new Schema({
-            name: String,
-            amount: Number,
-            unit: String
-        });
-        const Recipe = new Schema({
-            name: String,
-            ingredients: [Ingredient],
-            steps: [String]
-        });
-
-        const RecipeModel = mongoose.model('Recipe', Recipe);
-        return RecipeModel;
-    }
-
     async saveRecipe(recipe: Recipe): Promise<void> {
-        const RecipeModel = this.getRecipeModel();
-        const recipeToSave = new RecipeModel();
-        recipeToSave.name = recipe.name;
-        recipeToSave.ingredients = recipe.ingredients;
-        recipeToSave.steps = recipe.steps;
+        console.log('save recipe')
+        const recipeModel = this.recipeModel;
 
         console.log('Saving recipe', recipe);
-        await recipeToSave.save();
+
+        await recipeModel.create(recipe);
         console.log('Recipe saved');
     }
 
     async deleteRecipe(name: string): Promise<void> {
-        const RecipeModel = this.getRecipeModel();
+        const recipeModel = this.recipeModel;
+
         console.log('Deleting recipe', name);
-        await RecipeModel.findByIdAndRemove(name);
-        console.log('Recipe deleted');
+        const recipes = await recipeModel.find({
+            name
+        });
+        console.log('found recipes', recipes)
+        for (const recipe in recipes) {
+            await recipeModel.remove(recipe);
+        }
+
+        console.log('Recipe(s) deleted');
     }
 
     async getRecipes(name: string | null, ingredient: string | null): Promise<Recipe[]> {
-        const RecipeModel = this.getRecipeModel();
+        const recipeModel = this.recipeModel;
+        let params = {};
+        if (name) {
+            params = {
+                ...params,
+                name
+            };
+        }
+        if (ingredient) {
+            params = {
+                ...params,
+                ingredient
+            };
+        }
+
         console.log('Searching for recipes');
-        const docs = await RecipeModel.find({
-            name,
-            ingredient
-        });
+        const docs = await recipeModel.find(params);
 
         return docs;
     }

@@ -22,11 +22,11 @@ export default function useRecipe(defaultRecipe: Recipe): [
             });
         },
         (ingredient: Ingredient, index: number) => {
+            console.log(ingredient)
             updateRecipe({
                 type: 'updateIngredient',
                 index,
-                ingredient,
-                recipe: defaultRecipe
+                ingredient
             });
         },
         (index: number) => {

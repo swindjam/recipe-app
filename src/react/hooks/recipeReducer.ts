@@ -14,7 +14,7 @@ export default (state: Recipe, action: RecipeStateAction): Recipe => {
             }
             return state;
         case 'updateIngredient':
-            if (index && ingredient) {
+            if (typeof index === 'number' && ingredient) {
                 let newIngredients = state.ingredients.slice();
                 const existingIngredient = (state.ingredients[index] || { name: '', amount: null, unit: '' })
 

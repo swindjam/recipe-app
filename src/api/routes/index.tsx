@@ -4,7 +4,6 @@ import fs from 'fs';
 import React from 'react';
 import mustache from 'mustache';
 import App from '../../react/App';
-//import template from '../template.html';
 import DataSource from '../../types/DataSource';
 
 export default (dataSource: DataSource) => async (req: Request, res: Response) => {

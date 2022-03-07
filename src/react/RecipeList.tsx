@@ -40,7 +40,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         }
         const query = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
 
-        const response = await getData(`/search${query}`);
+        const response = await getData(`http://localhost:8081/search${query}`);
         setRecipes(response.recipes);
     };
 
@@ -67,7 +67,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
     const deleteRecipe = async (event: React.SyntheticEvent) => {
         const target = getTarget(event);
 
-        await postData('/delete', {
+        await postData('http://localhost:8081/delete', {
             recipe_name: target.id
         });
     };

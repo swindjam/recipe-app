@@ -28,8 +28,9 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
     const [recipe, updateRecipe, updateIngredient, removeIngredient, resetRecipe] = useRecipe(defaultRecipe);
 
     const updateTotalIngredients = (event: React.SyntheticEvent) => {
-        if (parseInt(String(event.currentTarget.nodeValue)) < recipe.ingredients.length && parseInt(String(event.currentTarget.nodeValue)) > 0) {
-            removeIngredient(parseInt(String((event.currentTarget.nodeValue))) - 1);
+        const target = event.target as HTMLInputElement;
+        if (parseInt(String(target.value)) < recipe.ingredients.length && parseInt(String(target.value)) > 0) {
+            removeIngredient(parseInt(String((target.value))) - 1);
         } else {
             updateIngredient(
                 {
@@ -37,7 +38,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                     amount: undefined,
                     unit: ''
                 },
-                parseInt(String(event.currentTarget.nodeValue)) - 1
+                parseInt(String(target.value)) - 1
             );
         }
     };
@@ -52,9 +53,6 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
         const id = target.id || target.name;
         const index = parseInt(id.replace(/-.*/, ''));
         const type = id.replace(/\d-/, '');
-
-
-console.log(target, index, type)
 
         let ingredient: Ingredient = {
             name: '',
@@ -86,7 +84,7 @@ console.log(target, index, type)
             method: recipe.method
         };
 
-        postData('/save', {
+        postData('http://localhost:8081/save', {
             recipe: recipeToSave
         });
         afterSubmit && afterSubmit();
