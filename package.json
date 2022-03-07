@@ -8,7 +8,8 @@
     "live": "NODE_ENV=production webpack --config webpack/webpack.config.live.ts",
     "node-live": "NODE_ENV=production webpack --config webpack/webpack.config.node.live.ts",
     "api": "nodemon --watch build/js/node --inspect=0.0.0.0:9229 build/js/node/api.js",
-    "cypress": "cypress open --config-file cypress.json"
+    "cypress": "cypress open --config-file cypress.json",
+    "ts-node-dev": "ts-node-dev --watch --respawn --transpile-only --project tsconfig.node.json src/api/server.ts"
   },
   "author": "James Swindley",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "ts-node-dev": "^1.1.8",
     "winston": "^3.6.0"
   },
   "devDependencies": {

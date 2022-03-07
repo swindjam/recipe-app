@@ -24,8 +24,8 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         ingredient: ''
     });
 
-    const changeSearch = (event: React.SyntheticEvent) => {
-        updateSearch(event.target.id, event.target.value);
+    const changeSearch = (event: React.SyntheticEvent) : void => {
+        updateSearch(event.currentTarget.id, event.currentTarget.value);
     };
 
     const searchRecipes = async () => {
@@ -49,7 +49,10 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         const target = getTarget(event);
 
         setShowEditModal(true);
-        setSelectedRecipe(recipes.find(r => r.name === target.id));
+        const recipe: Recipe | null = recipes.find(r => r.name === target.id);
+        if(recipe) {
+            setSelectedRecipe(recipe);
+        }
     };
     const closeEditModal = () => {
         setShowEditModal(false);

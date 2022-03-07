@@ -9,18 +9,10 @@ export default class MongoDataSource implements DataSource {
     }
 
     async connectToDB(): Promise<void> {
-        const {
-            DB_USER,
-            DB_PASSWORD,
-            DB_HOST,
-            DB_PORT,
-            DB_NAME,
-        } = process.env;
-
         const config = {
-            url: `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-            user: DB_USER,
-            pwd: DB_PASSWORD
+            url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+            user: process.env.DB_USER,
+            pwd: process.env.DB_PASSWORD
         };
 
         try {
@@ -31,6 +23,16 @@ export default class MongoDataSource implements DataSource {
                     pass: config.pwd
                 }
             );
+
+            // const UserSchema = new mongoose.Schema({
+            //     username: String,
+            //     email: String,
+            //     bio: String,
+            //     image: String,
+            //     hash: String,
+            //     salt: String
+            // }, { timestamps: true });
+            // mongoose.model('User', UserSchema);
         } catch (e) {
             console.log(`Failed to connect to DB - ${e}`);
         }
