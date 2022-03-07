@@ -6,7 +6,7 @@ db.createUser(
         pwd: 'pizza',
         roles: [
             {
-                role: 'root',
+                role: 'readWrite',
                 db: 'recipe_db'
             }
         ]

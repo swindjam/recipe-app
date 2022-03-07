@@ -24,16 +24,6 @@ export default class MongoDataSource implements DataSource {
                     pass: config.pwd
                 }
             );
-
-            // const UserSchema = new mongoose.Schema({
-            //     username: String,
-            //     email: String,
-            //     bio: String,
-            //     image: String,
-            //     hash: String,
-            //     salt: String
-            // }, { timestamps: true });
-            // mongoose.model('User', UserSchema);
         } catch (e) {
             console.log(`Failed to connect to DB - ${e}`);
         }
@@ -64,18 +54,21 @@ export default class MongoDataSource implements DataSource {
         recipeToSave.ingredients = recipe.ingredients;
         recipeToSave.steps = recipe.steps;
 
+        console.log('Saving recipe', recipe);
         await recipeToSave.save();
         console.log('Recipe saved');
     }
 
     async deleteRecipe(name: string): Promise<void> {
         const RecipeModel = this.getRecipeModel();
+        console.log('Deleting recipe', name);
         await RecipeModel.findByIdAndRemove(name);
         console.log('Recipe deleted');
     }
 
     async getRecipes(name: string | null, ingredient: string | null): Promise<Recipe[]> {
         const RecipeModel = this.getRecipeModel();
+        console.log('Searching for recipes');
         const docs = await RecipeModel.find({
             name,
             ingredient
