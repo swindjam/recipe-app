@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Tooltip, IconButton, TextField, Button, Modal } from '@mui/material';
 import Recipe from '../types/Recipe';
 import Ingredient from '../types/Ingredient';
@@ -25,7 +25,8 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
     });
 
     const changeSearch = (event: React.SyntheticEvent) : void => {
-        updateSearch(event.currentTarget.id, event.currentTarget.value);
+        const target = event.target as HTMLInputElement;
+        updateSearch(target.id, String(target.value));
     };
 
     const searchRecipes = async () => {
@@ -44,13 +45,18 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
     };
 
     const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [selectedRecipe, setSelectedRecipe] = useState<Recipe>({
+        name: '',
+        ingredients: [],
+        method: '',
+        steps: []
+    });
     const showEditRecipeModal = (event: React.SyntheticEvent) => {
         const target = getTarget(event);
 
         setShowEditModal(true);
-        const recipe: Recipe | null = recipes.find(r => r.name === target.id);
-        if(recipe) {
+        const recipe: Recipe | undefined = recipes.find(r => r.name === target.id);
+        if(typeof recipe !== 'undefined') {
             setSelectedRecipe(recipe);
         }
     };

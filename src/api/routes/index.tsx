@@ -20,8 +20,7 @@ export default (dataSource: DataSource) => async (req: Request, res: Response) =
 
 const getFile = () : Promise<string> => {
     return new Promise(res => {
-        fs.readFile('../template.html', 'utf8', (err, data) => {
-            console.log('data', data)
+        fs.readFile(__dirname + '/../../../../../src/api/template.html', 'utf8', (err, data) => {
             res(data);
         });
     });

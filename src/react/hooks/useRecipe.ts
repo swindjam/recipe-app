@@ -3,8 +3,13 @@ import Ingredient from '../../types/Ingredient';
 import Recipe from '../../types/Recipe';
 import recipeReducer from './recipeReducer';
 
-export default function useRecipe(defaultRecipe: Recipe) {
-
+export default function useRecipe(defaultRecipe: Recipe): [
+    Recipe,
+    (property: string, value: string | number) => void,
+    (ingredient: Ingredient, index: number) => void,
+    (index: number) => void,
+    () => void
+] {
     const [recipe, updateRecipe] = useReducer(recipeReducer, defaultRecipe);
 
     return [

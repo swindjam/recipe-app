@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, TextField, Paper, Button, Divider, Select, MenuItem } from '@mui/material';
+import { Box, TextField, Paper, Button, Divider, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import useRecipe from './hooks/useRecipe';
 import Recipe from '../types/Recipe';
+import Ingredient from '../types/Ingredient';
 import postData from './helpers/postData';
 
 interface Props {
@@ -27,8 +28,8 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
     const [recipe, updateRecipe, updateIngredient, removeIngredient, resetRecipe] = useRecipe(defaultRecipe);
 
     const updateTotalIngredients = (event: React.SyntheticEvent) => {
-        if (event.target.value < recipe.ingredients.length && event.target.value > 0) {
-            removeIngredient((event.target.value - 1));
+        if (parseInt(String(event.currentTarget.nodeValue)) < recipe.ingredients.length && parseInt(String(event.currentTarget.nodeValue)) > 0) {
+            removeIngredient(parseInt(String((event.currentTarget.nodeValue))) - 1);
         } else {
             updateIngredient(
                 {
@@ -36,7 +37,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                     amount: undefined,
                     unit: ''
                 },
-                (event.target.value - 1)
+                parseInt(String(event.currentTarget.nodeValue)) - 1
             );
         }
     };
@@ -45,15 +46,33 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
         updateRecipe(event.target.id, event.target.value);
     };
 
-    const changeIngredient = (event: React.FormEvent) => {
+    const changeIngredient = (event: React.SyntheticEvent | SelectChangeEvent) => {
         // Id for textfields, name for selects
-        const id = event.target.id || event.target.name;
-        const index = id.replace(/-.*/, '');
+        const target = event.target as HTMLInputElement;
+        const id = target.id || target.name;
+        const index = parseInt(id.replace(/-.*/, ''));
         const type = id.replace(/\d-/, '');
+
+
+console.log(target, index, type)
+
+        let ingredient: Ingredient = {
+            name: '',
+            amount: undefined,
+            unit: ''
+        };
+        const currentIngredient = recipe.ingredients[index];
+        if(currentIngredient) {
+            ingredient = {
+                ...ingredient,
+                ...currentIngredient
+            };
+        }
 
         updateIngredient(
             {
-                [type]: type === 'amount' ? parseInt(event.target.value) : event.target.value
+                ...ingredient,
+                [type]: type === 'amount' ? parseInt(String(target.value)) : target.value
             },
             index
         )
@@ -63,7 +82,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
         const recipeToSave: Recipe = {
             name: recipe.name,
             ingredients: recipe.ingredients,
-            steps: recipe.method.split('\n'),
+            steps: (recipe.method || '').split('\n'),
             method: recipe.method
         };
 

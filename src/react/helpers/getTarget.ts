@@ -1,10 +1,10 @@
 import React from "react";
 
 export default (event: React.SyntheticEvent) => {
-    let target = event.currentTarget;
+    let target = event.target as HTMLInputElement;
     let count = 0;
     while (target.nodeName !== 'BUTTON' || count > 5) {
-        target = target.parentNode;
+        target = target.parentNode as HTMLInputElement;
         count++;
     }
 

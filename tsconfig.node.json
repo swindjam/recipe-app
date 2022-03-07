@@ -6,10 +6,16 @@
         "noImplicitAny": true,
         "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "build",
-        "jsx": "react"
+        "outDir": "build/js/node",
+        "jsx": "react",
+        "noEmit": false,
+        "noEmitOnError": false,
+        "skipLibCheck": true
     },
     "typeRoots": [
         "node_modules/@types"
+    ],
+    "files": [
+        "src/api/server.ts"
     ]
 }
