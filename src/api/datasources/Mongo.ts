@@ -42,16 +42,14 @@ export default class MongoDataSource implements DataSource {
         }
     }
 
-    async disconnectFromDB() : Promise<void> {
+    async disconnectFromDB(): Promise<void> {
         await mongoose.disconnect();
         this.logger.log('info', 'Disconnected from DB', {});
     }
 
     async addRecipe(recipe: Recipe): Promise<void> {
         const id = new mongoose.Types.ObjectId().id;
-
-console.log('id', id)
-
+        recipe.id = parseInt(String(id));
         await this.recipeModel.create(recipe);
     }
 

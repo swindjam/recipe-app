@@ -14,7 +14,8 @@
     "node-tsc": "tsc --project tsconfig.node.json",
     "prod-server": "node ./build/js/node/api/server.js",
     "test": "jest --watch",
-    "test-ci": "jest --bail"
+    "test-ci": "jest --bail",
+    "lint": "eslint src"
   },
   "author": "James Swindley",
   "license": "ISC",
