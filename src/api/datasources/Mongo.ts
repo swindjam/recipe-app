@@ -77,7 +77,6 @@ export default class MongoDataSource implements DataSource {
         }
 
         const docs = await this.recipeModel.find(params);
-        console.log(docs);
         return docs.map((recipe: Recipe) => {
             return {
                 id: recipe.id,

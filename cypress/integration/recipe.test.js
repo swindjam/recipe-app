@@ -2,10 +2,10 @@
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
-    return false
-})
+    return false;
+});
 
-describe("Recipe tests", () => {
+describe('Recipe tests', () => {
 
     it(`Given I have a new recipe
         When I add the new recipe name
@@ -73,7 +73,7 @@ describe("Recipe tests", () => {
         cy.get('div[id="mui-component-select-1-unit"]').click();
         cy.get('li[data-value="grams').click();
 
-        cy.get('input[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
+        cy.get('textarea[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
 
         // Save the recipe
         cy.get('button').contains('Save').click();
@@ -82,12 +82,22 @@ describe("Recipe tests", () => {
         cy.get('button').contains('Recipes').click();
 
         // Search for a non existent recipe
-        cy.get('input[id="recipeName"]').type('Nothing');
+        cy.get('input[id="recipeName"]').type('Crumpet');
+        cy.get('button').contains('Search').click();
         cy.contains('Chocolate Cake').should('not.exist');
 
         // Now search for the recipe we saved earlier
-        cy.get('input[id="recipeName"]').type('Chocolate Cake');
-        cy.contains('Search').click();
+        cy.get('input[id="recipeName"]')
+            .type('{backspace}').trigger('input') // This is crude, but .clear() is not currently working here
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input');
+
+        cy.get('input[id="recipeName"]').type('hocolate Cake');
+        cy.get('button').contains('Search').click();
         cy.contains('Chocolate Cake');
         cy.contains('200 grams Flour');
         cy.contains('100 grams Sugar');
@@ -120,7 +130,7 @@ describe("Recipe tests", () => {
         cy.get('div[id="mui-component-select-1-unit"]').click();
         cy.get('li[data-value="grams').click();
 
-        cy.get('input[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
+        cy.get('textarea[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
 
         // Save the recipe
         cy.get('button').contains('Save').click();
@@ -129,12 +139,21 @@ describe("Recipe tests", () => {
         cy.get('button').contains('Recipes').click();
 
         // Search for a non existent recipe
-        cy.get('input[id="ingredient"]').type('Nothing');
+        cy.get('input[id="ingredient"]').type('Flower');
+        cy.get('button').contains('Search').click();
         cy.contains('Banana Bread').should('not.exist');
 
         // Now search for the recipe we saved earlier
-        cy.get('input[id="ingredient"]').type('Banana Bread');
+        cy.get('input[id="ingredient"]')
+            .type('{backspace}').trigger('input') // This is crude, but .clear() is not currently working here
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input')
+            .type('{backspace}').trigger('input');
+        cy.get('input[id="ingredient"]').type('lour');
         cy.get('button').contains('Search').click();
+
         cy.contains('Banana Bread');
         cy.contains('200 grams Flour');
         cy.contains('100 grams Sugar');

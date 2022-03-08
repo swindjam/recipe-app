@@ -29,7 +29,10 @@
     "globals": {
         "describe": true,
         "test": true,
-        "expect": true
+        "expect": true,
+        "it": true,
+        "Cypress": true,
+        "cy": true
     },
     "rules": {
         "indent": [
