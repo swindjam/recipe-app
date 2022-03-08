@@ -42,7 +42,7 @@ const App = ({ recipes }: Props): JSX.Element => {
                         );
                     case 1:
                         return (
-                            <RecipeForm />
+                            <RecipeForm updateExistingRecipe={false}/>
                         );
                 }
             })()}

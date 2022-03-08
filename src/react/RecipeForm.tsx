@@ -8,9 +8,10 @@ import postData from './helpers/postData';
 interface Props {
     recipe?: Recipe | null;
     afterSubmit?: () => void;
+    updateExistingRecipe: boolean;
 };
 
-const RecipeForm = ({ recipe: defaultRecipe, afterSubmit }: Props): JSX.Element => {
+const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }: Props): JSX.Element => {
     if (!defaultRecipe) {
         defaultRecipe = {
             name: '',
@@ -85,7 +86,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit }: Props): JSX.Element 
             method: recipe.method
         };
 
-        postData(`http://localhost:8081/${defaultRecipe ? 'update' : 'add'}`, {
+        postData(`http://localhost:8081/${updateExistingRecipe ? 'update' : 'add'}`, {
             recipe: recipeToSave
         });
         afterSubmit && afterSubmit();

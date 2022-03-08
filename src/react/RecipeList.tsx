@@ -98,7 +98,8 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                 <Box>
                     <RecipeForm {...{
                         recipe: selectedRecipe,
-                        afterSubmit: closeEditModal
+                        afterSubmit: closeEditModal,
+                        updateExistingRecipe: true
                     }} />
                 </Box>
             </Modal>}
