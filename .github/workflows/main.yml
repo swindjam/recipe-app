@@ -40,5 +40,8 @@ jobs:
       - name: Node Build
         run: npm run node-tsc
         
+      - name: Start Mongo & App for Cypress
+        run: docker-compose up -d
+        
       - name: Cypress
-        run: npm run cypress-ci
+        run: npm run cypress-run
