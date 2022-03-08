@@ -1,5 +1,5 @@
-import RecipeStateAction from '../../types/RecipeStateAction';
-import Recipe from '../../types/Recipe';
+import {RecipeStateAction} from '../../types/RecipeStateAction';
+import {Recipe} from '../../types/Recipe';
 
 export default (state: Recipe, action: RecipeStateAction): Recipe => {
     const { type, property, value, recipe, index, ingredient } = action;
@@ -15,8 +15,8 @@ export default (state: Recipe, action: RecipeStateAction): Recipe => {
             return state;
         case 'updateIngredient':
             if (typeof index === 'number' && ingredient) {
-                let newIngredients = state.ingredients.slice();
-                const existingIngredient = (state.ingredients[index] || { name: '', amount: null, unit: '' })
+                const newIngredients = state.ingredients.slice();
+                const existingIngredient = (state.ingredients[index] || { name: '', amount: null, unit: '' });
 
                 newIngredients[index] = {
                     ...existingIngredient,
@@ -45,4 +45,4 @@ export default (state: Recipe, action: RecipeStateAction): Recipe => {
         default:
             return state;
     }
-}
+};

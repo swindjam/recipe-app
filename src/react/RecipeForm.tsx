@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Box, TextField, Paper, Button, Divider, Select, MenuItem, SelectChangeEvent, Alert } from '@mui/material';
 import useRecipe from './hooks/useRecipe';
-import Recipe from '../types/Recipe';
-import Ingredient from '../types/Ingredient';
+import {Recipe} from '../types/Recipe';
+import {Ingredient} from '../types/Ingredient';
 import postData from './helpers/postData';
 
 interface Props {
     recipe?: Recipe | null;
     afterSubmit?: () => void;
     updateExistingRecipe: boolean;
-};
+}
 
 const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }: Props): JSX.Element => {
     if (!defaultRecipe) {
@@ -74,7 +74,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                 [type]: type === 'amount' ? parseInt(String(target.value)) : target.value
             },
             index
-        )
+        );
     };
 
     const [message, setMessage] = useState('');
@@ -105,7 +105,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
             <Paper>
                 <form>
                     <TextField
-                        style={{ width: "200px", margin: "5px" }}
+                        style={{ width: '200px', margin: '5px' }}
                         type="text"
                         label="Recipe Name"
                         variant="outlined"
@@ -116,7 +116,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                     <Divider />
                     <h3 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Ingredients</h3>
                     <TextField
-                        style={{ width: "200px", margin: "5px" }}
+                        style={{ width: '200px', margin: '5px' }}
                         type="number"
                         label="Number of Ingredients"
                         variant="outlined"
@@ -134,7 +134,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                 <div key={i}>
                                     <h4 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Ingredient {i + 1}</h4>
                                     <TextField
-                                        style={{ width: "200px", margin: "5px" }}
+                                        style={{ width: '200px', margin: '5px' }}
                                         type="text"
                                         label="Ingredient Name"
                                         variant="outlined"
@@ -144,7 +144,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                     />
                                     <br />
                                     <TextField
-                                        style={{ width: "200px", margin: "5px" }}
+                                        style={{ width: '200px', margin: '5px' }}
                                         type="number"
                                         label="Ingredient Amount"
                                         variant="outlined"
@@ -154,7 +154,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                     />
                                     <br />
                                     <Select
-                                        style={{ width: "200px", margin: "5px" }}
+                                        style={{ width: '200px', margin: '5px' }}
                                         label="Ingredient Unit"
                                         name={`${i}-unit`}
                                         value={recipe.ingredients[i].unit || ''}
@@ -166,7 +166,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                     </Select>
                                     <br />
                                 </div>
-                            )
+                            );
                         }
 
                         return result;
@@ -175,7 +175,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                     <Divider />
                     <h3 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Method</h3>
                     <TextField
-                        style={{ width: "200px", margin: "5px" }}
+                        style={{ width: '200px', margin: '5px' }}
                         type="text"
                         label="Method"
                         variant="outlined"
@@ -187,7 +187,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                     <br />
                     <br />
                     <Button
-                        style={{ margin: "5px" }}
+                        style={{ margin: '5px' }}
                         variant="contained"
                         color="primary"
                         onClick={saveRecipe}
@@ -195,7 +195,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                         Save
                     </Button>
                     <Button
-                        style={{ margin: "5px" }}
+                        style={{ margin: '5px' }}
                         variant="contained"
                         color="secondary"
                         onClick={resetRecipe}

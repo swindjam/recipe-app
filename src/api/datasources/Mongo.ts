@@ -1,7 +1,7 @@
 import mongoose, { Model } from 'mongoose';
 import { Logger } from 'winston';
-import DataSource from "../../types/DataSource";
-import Recipe from '../../types/Recipe';
+import {DataSource} from '../../types/DataSource';
+import {Recipe} from '../../types/Recipe';
 import getRecipeModel from './getRecipeModel';
 
 interface Config {
@@ -50,6 +50,7 @@ export default class MongoDataSource implements DataSource {
     async addRecipe(recipe: Recipe): Promise<void> {
         const id = new mongoose.Types.ObjectId().id;
         recipe.id = parseInt(String(id));
+        console.log(recipe);
         await this.recipeModel.create(recipe);
     }
 
@@ -77,6 +78,7 @@ export default class MongoDataSource implements DataSource {
         }
 
         const docs = await this.recipeModel.find(params);
+        console.log(docs);
         return docs.map((recipe: Recipe) => {
             return {
                 id: recipe.id,

@@ -1,6 +1,6 @@
-import Recipe from './Recipe';
+import {Recipe} from './Recipe';
 
-export default interface DataSource {
+export interface DataSource {
     addRecipe(recipe: Recipe) : Promise<void>;
     updateRecipe(recipe: Recipe) : Promise<void>;
     deleteRecipe(id: number) : Promise<void>;

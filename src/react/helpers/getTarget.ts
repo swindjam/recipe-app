@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default (event: React.SyntheticEvent) => {
     let target = event.target as HTMLInputElement;

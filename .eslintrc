@@ -39,10 +39,6 @@
                 "SwitchCase": 1
             }
         ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
         "quotes": [
             "error",
             "single"
@@ -60,7 +56,6 @@
         ],
         "no-var": 2,
         "no-useless-escape": 0,
-        "object-property-newlint": "error",
         "react/jsx-uses-vars": "error",
         "react/jsx-indent-props": [
             2,
@@ -104,6 +99,7 @@
         ],
         "typescript-eslint/no-var-requires": [
             0
-        ]
+        ],
+        "@typescript-eslint/no-extra-semi": 0
     }
 }

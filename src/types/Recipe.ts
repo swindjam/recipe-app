@@ -1,6 +1,6 @@
-import Ingredient from './Ingredient';
+import {Ingredient} from './Ingredient';
 
-export default interface Recipe {
+export interface Recipe {
     id?: number;
     name: string;
     ingredients: Ingredient[];

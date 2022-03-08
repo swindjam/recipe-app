@@ -1,3 +1,5 @@
+/* eslint-disable */
+// ESLint disabled as this runs directly in Mongo
 db.auth('root', 'example');
 
 db.createUser(

@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
-import Ingredient from '../../types/Ingredient';
-import Recipe from '../../types/Recipe';
+import {Ingredient} from '../../types/Ingredient';
+import {Recipe} from '../../types/Recipe';
 import recipeReducer from './recipeReducer';
 
 export default function useRecipe(defaultRecipe: Recipe): [

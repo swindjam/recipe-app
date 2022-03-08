@@ -11,11 +11,11 @@ describe('objectReducer.ts', () => {
             type: 'update',
             property: 'b',
             value: 3
-        }
+        };
         expect(objectReducer(state, action)).toMatchObject({
             a: 1,
             b: 3
-        })
+        });
     });
 
     test('Should reset the values in state', () => {
@@ -29,10 +29,10 @@ describe('objectReducer.ts', () => {
                 a: 1,
                 b: 3
             }
-        }
+        };
         expect(objectReducer(state, action)).toMatchObject({
             a: 1,
             b: 3
-        })
+        });
     });
 });

@@ -1,7 +1,7 @@
-import Ingredient from './Ingredient';
-import Recipe from './Recipe';
+import {Ingredient} from './Ingredient';
+import {Recipe} from './Recipe';
 
-export default interface RecipeStateAction {
+export interface RecipeStateAction {
     type: string;
     property?: string;
     value?: string | number;

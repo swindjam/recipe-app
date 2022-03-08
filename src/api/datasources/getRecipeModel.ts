@@ -1,6 +1,5 @@
 import mongoose, { Model } from 'mongoose';
-import { number } from 'prop-types';
-import Recipe from '../../types/Recipe';
+import {Recipe} from '../../types/Recipe';
 
 export default () : Model<Recipe> => {
     const Schema = mongoose.Schema;

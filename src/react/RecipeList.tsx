@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Tooltip, IconButton, TextField, Button, Modal, Alert } from '@mui/material';
-import Recipe from '../types/Recipe';
-import Ingredient from '../types/Ingredient';
+import {Recipe} from '../types/Recipe';
+import {Ingredient} from '../types/Ingredient';
 import { Delete, Edit } from '@mui/icons-material';
 import getData from './helpers/getData';
 import postData from './helpers/postData';
@@ -11,7 +11,7 @@ import getTarget from './helpers/getTarget';
 
 interface Props {
     recipes: Recipe[]
-};
+}
 
 const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
     if (!defaultRecipes) {
@@ -111,7 +111,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                 borderColor: 'divider'
             }}>
                 <TextField
-                    style={{ width: "200px", margin: "5px" }}
+                    style={{ width: '200px', margin: '5px' }}
                     type="text"
                     label="Recipe Name"
                     variant="outlined"
@@ -120,7 +120,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                     id='recipeName'
                 />
                 <TextField
-                    style={{ width: "200px", margin: "5px" }}
+                    style={{ width: '200px', margin: '5px' }}
                     type="text"
                     label="Ingredient Name"
                     variant="outlined"
@@ -129,7 +129,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                     id='ingredient'
                 />
                 <Button
-                    style={{ margin: "5px" }}
+                    style={{ margin: '5px' }}
                     variant="contained"
                     color="primary"
                     onClick={searchRecipes}

@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import DataSource from '../../types/DataSource';
+import {DataSource} from '../../types/DataSource';
 
 export default (dataSource: DataSource) => async (req: Request, res: Response) => {
 

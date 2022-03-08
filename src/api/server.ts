@@ -8,22 +8,22 @@ import updateRecipe from './routes/updateRecipe';
 import deleteRecipe from './routes/deleteRecipe';
 import MongoDataSource from './datasources/Mongo';
 
-const app = express()
-const port = 8081
+const app = express();
+const port = 8081;
 
 app.use(bodyParser.json({ limit: '10mb' }));
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
-  next();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    next();
 });
 
 // Setup routes
 const logger = createLogger({
-  level: 'info',
-  format: format.json(),
-  transports: [new transports.Console()]
+    level: 'info',
+    format: format.json(),
+    transports: [new transports.Console()]
 });
 const dataSource = new MongoDataSource(logger);
 
@@ -38,17 +38,17 @@ app.listen(port, () => {
 });
 
 const shutdown = (exitCode: number) : void => {
-   logger.log('info', 'Server shutting down', {});
-   dataSource.disconnectFromDB();
-   process.exit(exitCode + 128);
+    logger.log('info', 'Server shutting down', {});
+    dataSource.disconnectFromDB();
+    process.exit(exitCode + 128);
 };
 
 process.on('SIGINT', () => {
-  shutdown(2);
+    shutdown(2);
 });
 process.on('SIGABRT', () => {
-  shutdown(6);
+    shutdown(6);
 });
 process.on('SIGTERM', () => {
-  shutdown(15);
+    shutdown(15);
 });
