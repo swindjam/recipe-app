@@ -9,7 +9,7 @@
     "node-live": "NODE_ENV=production webpack --config webpack/webpack.config.node.live.ts",
     "api": "nodemon --watch build/js/node --inspect=0.0.0.0:9229 build/js/node/api.js",
     "cypress": "cypress open --config-file cypress.json",
-    "cypress-ci": "start-server-and-test cypress-server prod-server cypress",
+    "cypress-ci": "start-server-and-test prod-server cypress",
     "dev-server": "tsc-watch --project tsconfig.node.json --onSuccess \"node ./build/js/node/api/server.js\"",
     "node-tsc": "tsc --project tsconfig.node.json",
     "prod-server": "node ./build/js/node/api/server.js",
