@@ -13,6 +13,7 @@ export default (dataSource: DataSource) => async (req: Request, res: Response) =
     res.send(
         mustache.render(template, {
             html: renderToString(<App recipes={recipes} />),
+            recipes: JSON.stringify(recipes)
         })
     );
 };

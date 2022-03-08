@@ -24,12 +24,16 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         ingredient: ''
     });
 
-    const changeSearch = (event: React.SyntheticEvent) : void => {
+    const changeSearch = (event: React.SyntheticEvent): void => {
         const target = event.target as HTMLInputElement;
         updateSearch(target.id, String(target.value));
     };
 
-    const searchRecipes = async () => {
+    const getRecipes = async (query: string) : Promise<void> => {
+        const response = await getData(`http://localhost:8081/search${query}`);
+        setRecipes(response.recipes);
+    };
+    const searchRecipes = async () : Promise<void> => {
         const queryParts = [];
         if (search.recipeName) {
             queryParts.push(`recipe_name=${search.recipeName}`);
@@ -39,9 +43,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
             queryParts.push(`ingredient=${search.ingredient}`);
         }
         const query = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
-
-        const response = await getData(`http://localhost:8081/search${query}`);
-        setRecipes(response.recipes);
+        getRecipes(query);
     };
 
     const [showEditModal, setShowEditModal] = useState(false);
@@ -52,21 +54,22 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         steps: []
     });
     const [message, setMessage] = useState('');
-    const showEditRecipeModal = (event: React.SyntheticEvent) => {
+    const showEditRecipeModal = (event: React.SyntheticEvent) : void => {
         const target = getTarget(event);
 
         setShowEditModal(true);
         const recipe: Recipe | undefined = recipes.find(r => r.name === target.id);
-        if(typeof recipe !== 'undefined') {
+        if (typeof recipe !== 'undefined') {
             setSelectedRecipe(recipe);
         }
     };
-    const closeEditModal = () => {
+    const closeEditModal = () : void => {
         setShowEditModal(false);
         setMessage('Recipe edited!');
+        getRecipes('');
     };
-    
-    const deleteRecipe = async (event: React.SyntheticEvent) => {
+
+    const deleteRecipe = async (event: React.SyntheticEvent) : Promise<void> => {
         const target = getTarget(event);
 
         await postData('http://localhost:8081/delete', {
@@ -74,6 +77,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         });
 
         setMessage('Recipe deleted!');
+        getRecipes('');
     };
 
     useEffect(() => {
@@ -81,7 +85,6 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
             setMessage('');
         }, 2000);
     }, [message]);
-
 
     return (
         <div>
@@ -93,14 +96,17 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                 aria-describedby="modal-modal-description"
             >
                 <Box>
-                    <RecipeForm {...{ recipe: selectedRecipe, afterSubmit: closeEditModal }} />
+                    <RecipeForm {...{
+                        recipe: selectedRecipe,
+                        afterSubmit: closeEditModal
+                    }} />
                 </Box>
             </Modal>}
             <Paper sx={{
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 alignItems: 'center',
-                borderTop: 1, 
+                borderTop: 1,
                 borderColor: 'divider'
             }}>
                 <TextField

@@ -6,11 +6,11 @@ import Ingredient from '../types/Ingredient';
 import postData from './helpers/postData';
 
 interface Props {
-    defaultRecipe?: Recipe | null;
+    recipe?: Recipe | null;
     afterSubmit?: () => void;
 };
 
-const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
+const RecipeForm = ({ recipe: defaultRecipe, afterSubmit }: Props): JSX.Element => {
     if (!defaultRecipe) {
         defaultRecipe = {
             name: '',
@@ -27,7 +27,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
     }
     const [recipe, updateRecipe, updateIngredient, removeIngredient, resetRecipe] = useRecipe(defaultRecipe);
 
-    const updateTotalIngredients = (event: React.SyntheticEvent) => {
+    const updateTotalIngredients = (event: React.SyntheticEvent) : void => {
         const target = event.target as HTMLInputElement;
         if (parseInt(String(target.value)) < recipe.ingredients.length && parseInt(String(target.value)) > 0) {
             removeIngredient(parseInt(String((target.value))) - 1);
@@ -43,11 +43,11 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
         }
     };
 
-    const changeRecipe = (event: React.BaseSyntheticEvent) => {
+    const changeRecipe = (event: React.BaseSyntheticEvent) : void => {
         updateRecipe(event.target.id, event.target.value);
     };
 
-    const changeIngredient = (event: React.SyntheticEvent | SelectChangeEvent) => {
+    const changeIngredient = (event: React.SyntheticEvent | SelectChangeEvent) : void => {
         // Id for textfields, name for selects
         const target = event.target as HTMLInputElement;
         const id = target.id || target.name;
@@ -77,7 +77,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
     };
 
     const [message, setMessage] = useState('');
-    const saveRecipe = () => {
+    const saveRecipe = () : void => {
         const recipeToSave: Recipe = {
             name: recipe.name,
             ingredients: recipe.ingredients,
@@ -85,7 +85,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
             method: recipe.method
         };
 
-        postData('http://localhost:8081/save', {
+        postData(`http://localhost:8081/${defaultRecipe ? 'update' : 'add'}`, {
             recipe: recipeToSave
         });
         afterSubmit && afterSubmit();
@@ -180,6 +180,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                         multiline
                         onInput={changeRecipe}
                         id='method'
+                        value={recipe.method}
                     />
                     <br />
                     <br />
@@ -190,6 +191,14 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                         onClick={saveRecipe}
                     >
                         Save
+                    </Button>
+                    <Button
+                        style={{ margin: "5px" }}
+                        variant="contained"
+                        color="secondary"
+                        onClick={resetRecipe}
+                    >
+                        Reset
                     </Button>
                 </form>
             </Paper>

@@ -34,8 +34,12 @@ export default class MongoDataSource implements DataSource {
         }
     }
 
-    async saveRecipe(recipe: Recipe): Promise<void> {
+    async addRecipe(recipe: Recipe): Promise<void> {
         await this.recipeModel.create(recipe);
+    }
+
+    async updateRecipe(recipe: Recipe): Promise<void> {
+        await this.recipeModel.findOneAndUpdate(recipe);
     }
 
     async deleteRecipe(name: string): Promise<void> {
@@ -53,13 +57,19 @@ export default class MongoDataSource implements DataSource {
         if (ingredient) {
             params = {
                 ...params,
-                ingredients: [{name: ingredient}]
+                'ingredients.name': ingredient
             };
         }
-        console.log('params', params);
-        const docs = await this.recipeModel.find(params);
 
+        const docs = await this.recipeModel.find(params);
         console.log('docs', docs);
-        return docs;
+        return docs.map((recipe: Recipe) => {
+            return {
+                name: recipe.name,
+                ingredients: recipe.ingredients,
+                steps: recipe.steps,
+                method: recipe.steps.join('\n')
+            };
+        });
     }
 }
