@@ -121,7 +121,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                         label="Number of Ingredients"
                         variant="outlined"
                         InputProps={{ inputProps: { min: 0 } }}
-                        value={recipe.ingredients.length}
+                        value={recipe.ingredients.length || 0}
                         onInput={updateTotalIngredients}
                         id="numberOfIngredients"
                     />
@@ -140,7 +140,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                         variant="outlined"
                                         onInput={changeIngredient}
                                         id={`${i}-name`}
-                                        value={recipe.ingredients[i].name}
+                                        value={recipe.ingredients[i].name || ''}
                                     />
                                     <br />
                                     <TextField
@@ -150,14 +150,14 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                                         variant="outlined"
                                         onInput={changeIngredient}
                                         id={`${i}-amount`}
-                                        value={recipe.ingredients[i].amount}
+                                        value={recipe.ingredients[i].amount || 0}
                                     />
                                     <br />
                                     <Select
                                         style={{ width: "200px", margin: "5px" }}
                                         label="Ingredient Unit"
                                         name={`${i}-unit`}
-                                        value={recipe.ingredients[i].unit}
+                                        value={recipe.ingredients[i].unit || ''}
                                         onChange={changeIngredient}
                                     >
                                         <MenuItem value='grams'>grams</MenuItem>

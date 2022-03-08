@@ -29,7 +29,7 @@ export default class MongoDataSource implements DataSource {
 
     async connectToDB(): Promise<void> {
         try {
-            this.logger.log('Connecting to DB', this.config);
+            this.logger.log('info', 'Connecting to DB', this.config);
             await mongoose.connect(
                 this.config.url,
                 {
@@ -38,15 +38,20 @@ export default class MongoDataSource implements DataSource {
                 }
             );
         } catch (e) {
-            this.logger.log(`Failed to connect to DB - ${e}`, {});
+            this.logger.log('info', `Failed to connect to DB - ${e}`, {});
         }
     }
 
     async disconnectFromDB() : Promise<void> {
         await mongoose.disconnect();
+        this.logger.log('info', 'Disconnected from DB', {});
     }
 
     async addRecipe(recipe: Recipe): Promise<void> {
+        const id = new mongoose.Types.ObjectId().id;
+
+console.log('id', id)
+
         await this.recipeModel.create(recipe);
     }
 
@@ -54,8 +59,8 @@ export default class MongoDataSource implements DataSource {
         await this.recipeModel.findOneAndUpdate(recipe);
     }
 
-    async deleteRecipe(name: string): Promise<void> {
-        await this.recipeModel.deleteOne({ name });
+    async deleteRecipe(id: number): Promise<void> {
+        await this.recipeModel.deleteOne({ id });
     }
 
     async getRecipes(name: string | null, ingredient: string | null): Promise<Recipe[]> {
@@ -76,6 +81,7 @@ export default class MongoDataSource implements DataSource {
         const docs = await this.recipeModel.find(params);
         return docs.map((recipe: Recipe) => {
             return {
+                id: recipe.id,
                 name: recipe.name,
                 ingredients: recipe.ingredients,
                 steps: recipe.steps,

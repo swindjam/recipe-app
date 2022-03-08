@@ -34,15 +34,21 @@ app.post('/update', updateRecipe(dataSource));
 app.post('/delete', deleteRecipe(dataSource));
 
 app.listen(port, () => {
-    logger.log(`App listening on port ${port}`, {});
+    logger.log('info', `App listening on port ${port}`, {});
 });
 
 const shutdown = (exitCode: number) : void => {
-   logger.log('Server shutting down', {});
+   logger.log('info', 'Server shutting down', {});
    dataSource.disconnectFromDB();
    process.exit(exitCode + 128);
 };
 
-process.on('SIGINT', () => shutdown(2));
-process.on('SIGABRT', () => shutdown(6));
-process.on('SIGTERM', () => shutdown(15));
+process.on('SIGINT', () => {
+  shutdown(2);
+});
+process.on('SIGABRT', () => {
+  shutdown(6);
+});
+process.on('SIGTERM', () => {
+  shutdown(15);
+});

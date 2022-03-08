@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import objectReducer from './objectReducer';
 
-export default function useValues(defaultValues: Record<string, string>) : [Record<string, string>, (property: string, value: string) => void] {
+export default function useValues(defaultValues: Record<string, string | number>) : [Record<string, string | number>, (property: string, value: string) => void] {
     const [values, updateValues] = useReducer(objectReducer, defaultValues);
 
     return [

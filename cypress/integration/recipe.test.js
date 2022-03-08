@@ -6,7 +6,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 })
 
 describe("Recipe tests", () => {
-    it.only(`Given I have a new recipe
+
+    it(`Given I have a new recipe
         When I add the new recipe name
         And ingredients
         And measurements
@@ -15,35 +16,36 @@ describe("Recipe tests", () => {
         cy.visit('/');
 
         // Navigate to the add recipe tab
-        cy.contains('Add Recipe').click();
+        cy.get('button').contains('Add Recipe').click();
 
         // Enter the recipe details
         cy.get('input[id="name"]').type('Carrot Cake').trigger('change');
-        cy.get('input[id="numberOfIngredients"]').focus().type('backspace');
-        cy.get('input[id="numberOfIngredients"]').type('2').trigger('change');
+        cy.get('input[id="numberOfIngredients"]').type('{uparrow}');
+        cy.get('input[id="numberOfIngredients"]').trigger('input');
 
-        cy.get('input[id="0-name"]').type('Flour').trigger('change');
-        cy.get('input[id="0-amount"]').type('200').trigger('change');
+        cy.get('input[id="0-name"]').focus().type('Flour').trigger('change');
+        cy.get('input[id="0-amount"]').focus().type('200').trigger('change');
         cy.get('div[id="mui-component-select-0-unit"]').click();
         cy.get('li[data-value="grams').click();
 
         cy.get('input[id="1-name"]').type('Sugar').trigger('change');
-        cy.get('input[id="1-amount"]').type('100').trigger('change');
+        cy.get('input[id="1-amount"]').focus().type('100').trigger('change');
         cy.get('div[id="mui-component-select-1-unit"]').click();
         cy.get('li[data-value="grams').click();
 
         cy.get('textarea[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
 
         // Save the recipe
-        cy.contains('Save').click();
+        cy.get('button').contains('Save').click();
 
         // Load the recipes page
-        cy.contains('Recipes').click();
-        cy.contains('Search').click();
+        cy.get('button').contains('Recipes').click();
+        cy.get('button').contains('Search').click();
         cy.contains('Carrot Cake');
         cy.contains('200 grams Flour');
         cy.contains('100 grams Sugar');
-        cy.contains('1. Mix ingredients in a bowl\n2. Cook in oven for 20 minutes at 180c');
+        cy.contains('1. Mix ingredients in a bowl');
+        cy.contains('2. Cook in oven for 20 minutes at 180c');
     });
 
     it(`Given I want to look for a recipe
@@ -54,11 +56,12 @@ describe("Recipe tests", () => {
         cy.visit('/');
 
         // Navigate to the add recipe tab
-        cy.contains('Add Recipe').click();
+        cy.get('button').contains('Add Recipe').click();
 
         // Enter the recipe details
         cy.get('input[id="name"]').type('Chocolate Cake').trigger('change');
-        cy.get('input[id="numberOfIngredients"]').type(2).trigger('change');
+        cy.get('input[id="numberOfIngredients"]').type('{uparrow}');
+        cy.get('input[id="numberOfIngredients"]').trigger('input');
 
         cy.get('input[id="0-name"]').type('Flour').trigger('change');
         cy.get('input[id="0-amount"]').type('200').trigger('change');
@@ -73,10 +76,10 @@ describe("Recipe tests", () => {
         cy.get('input[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
 
         // Save the recipe
-        cy.contains('Save').click();
+        cy.get('button').contains('Save').click();
 
         // Load the recipes page
-        cy.contains('Recipes').click();
+        cy.get('button').contains('Recipes').click();
 
         // Search for a non existent recipe
         cy.get('input[id="recipeName"]').type('Nothing');
@@ -88,7 +91,8 @@ describe("Recipe tests", () => {
         cy.contains('Chocolate Cake');
         cy.contains('200 grams Flour');
         cy.contains('100 grams Sugar');
-        cy.contains('1. Mix ingredients in a bowl\n2. Cook in oven for 20 minutes at 180c');
+        cy.contains('1. Mix ingredients in a bowl');
+        cy.contains('2. Cook in oven for 20 minutes at 180c');
     });
 
     it(`Given I want to look for a recipe by ingredients
@@ -99,11 +103,12 @@ describe("Recipe tests", () => {
         cy.visit('/');
 
         // Navigate to the add recipe tab
-        cy.contains('Add Recipe').click();
+        cy.get('button').contains('Add Recipe').click();
 
         // Enter the recipe details
         cy.get('input[id="name"]').type('Banana Bread').trigger('change');
-        cy.get('input[id="numberOfIngredients"]').type(2).trigger('change');
+        cy.get('input[id="numberOfIngredients"]').type('{uparrow}');
+        cy.get('input[id="numberOfIngredients"]').trigger('input');
 
         cy.get('input[id="0-name"]').type('Flour').trigger('change');
         cy.get('input[id="0-amount"]').type('200').trigger('change');
@@ -118,10 +123,10 @@ describe("Recipe tests", () => {
         cy.get('input[id="method"]').type('Mix ingredients in a bowl\nCook in oven for 20 minutes at 180c');
 
         // Save the recipe
-        cy.contains('Save').click();
+        cy.get('button').contains('Save').click();
 
         // Load the recipes page
-        cy.contains('Recipes').click();
+        cy.get('button').contains('Recipes').click();
 
         // Search for a non existent recipe
         cy.get('input[id="ingredient"]').type('Nothing');
@@ -129,10 +134,11 @@ describe("Recipe tests", () => {
 
         // Now search for the recipe we saved earlier
         cy.get('input[id="ingredient"]').type('Banana Bread');
-        cy.contains('Search').click();
+        cy.get('button').contains('Search').click();
         cy.contains('Banana Bread');
         cy.contains('200 grams Flour');
         cy.contains('100 grams Sugar');
-        cy.contains('1. Mix ingredients in a bowl\n2. Cook in oven for 20 minutes at 180c');
+        cy.contains('1. Mix ingredients in a bowl');
+        cy.contains('2. Cook in oven for 20 minutes at 180c');
     });
 });

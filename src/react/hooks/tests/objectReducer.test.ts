@@ -24,9 +24,11 @@ describe('objectReducer.ts', () => {
             b: 2
         };
         const action = {
-            type: 'update',
-            property: 'b',
-            value: 3
+            type: 'reset',
+            defaultValues: {
+                a: 1,
+                b: 3
+            }
         }
         expect(objectReducer(state, action)).toMatchObject({
             a: 1,

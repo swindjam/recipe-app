@@ -58,7 +58,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         const target = getTarget(event);
 
         setShowEditModal(true);
-        const recipe: Recipe | undefined = recipes.find(r => r.name === target.id);
+        const recipe: Recipe | undefined = recipes.find(r => r.id === parseInt(target.id));
         if (typeof recipe !== 'undefined') {
             setSelectedRecipe(recipe);
         }
@@ -73,7 +73,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         const target = getTarget(event);
 
         await postData('http://localhost:8081/delete', {
-            recipe_name: target.id
+            recipe_name: parseInt(target.id)
         });
 
         setMessage('Recipe deleted!');
@@ -151,7 +151,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                         <TableBody>
                             {recipes.map((recipe: Recipe) => (
                                 <TableRow
-                                    key={recipe.name}
+                                    key={recipe.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">
@@ -177,12 +177,12 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                                     </TableCell>
                                     <TableCell>
                                         <Tooltip title="Edit">
-                                            <IconButton onClick={showEditRecipeModal} id={recipe.name}>
+                                            <IconButton onClick={showEditRecipeModal} id={String(recipe.id)}>
                                                 <Edit />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Delete">
-                                            <IconButton onClick={deleteRecipe} id={recipe.name}>
+                                            <IconButton onClick={deleteRecipe} id={String(recipe.id)}>
                                                 <Delete />
                                             </IconButton>
                                         </Tooltip>
