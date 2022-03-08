@@ -22,7 +22,6 @@ export default function useRecipe(defaultRecipe: Recipe): [
             });
         },
         (ingredient: Ingredient, index: number) => {
-            console.log(ingredient)
             updateRecipe({
                 type: 'updateIngredient',
                 index,

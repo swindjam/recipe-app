@@ -1,4 +1,5 @@
 import mongoose, { Model } from 'mongoose';
+import { compileFunction } from 'vm';
 import DataSource from "../../types/DataSource";
 import Recipe from '../../types/Recipe';
 import getRecipeModel from './getRecipeModel';
@@ -34,32 +35,14 @@ export default class MongoDataSource implements DataSource {
     }
 
     async saveRecipe(recipe: Recipe): Promise<void> {
-        console.log('save recipe')
-        const recipeModel = this.recipeModel;
-
-        console.log('Saving recipe', recipe);
-
-        await recipeModel.create(recipe);
-        console.log('Recipe saved');
+        await this.recipeModel.create(recipe);
     }
 
     async deleteRecipe(name: string): Promise<void> {
-        const recipeModel = this.recipeModel;
-
-        console.log('Deleting recipe', name);
-        const recipes = await recipeModel.find({
-            name
-        });
-        console.log('found recipes', recipes)
-        for (const recipe in recipes) {
-            await recipeModel.remove(recipe);
-        }
-
-        console.log('Recipe(s) deleted');
+        await this.recipeModel.deleteOne({ name });
     }
 
     async getRecipes(name: string | null, ingredient: string | null): Promise<Recipe[]> {
-        const recipeModel = this.recipeModel;
         let params = {};
         if (name) {
             params = {
@@ -70,13 +53,13 @@ export default class MongoDataSource implements DataSource {
         if (ingredient) {
             params = {
                 ...params,
-                ingredient
+                ingredients: [{name: ingredient}]
             };
         }
+        console.log('params', params);
+        const docs = await this.recipeModel.find(params);
 
-        console.log('Searching for recipes');
-        const docs = await recipeModel.find(params);
-
+        console.log('docs', docs);
         return docs;
     }
 }

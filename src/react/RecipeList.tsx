@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Tooltip, IconButton, TextField, Button, Modal } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, List, ListItem, ListItemText, Tooltip, IconButton, TextField, Button, Modal, Alert } from '@mui/material';
 import Recipe from '../types/Recipe';
 import Ingredient from '../types/Ingredient';
 import { Delete, Edit } from '@mui/icons-material';
@@ -51,6 +51,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         method: '',
         steps: []
     });
+    const [message, setMessage] = useState('');
     const showEditRecipeModal = (event: React.SyntheticEvent) => {
         const target = getTarget(event);
 
@@ -62,6 +63,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
     };
     const closeEditModal = () => {
         setShowEditModal(false);
+        setMessage('Recipe edited!');
     };
     
     const deleteRecipe = async (event: React.SyntheticEvent) => {
@@ -70,10 +72,20 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         await postData('http://localhost:8081/delete', {
             recipe_name: target.id
         });
+
+        setMessage('Recipe deleted!');
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setMessage('');
+        }, 2000);
+    }, [message]);
+
 
     return (
         <div>
+            {message && <Alert severity="info">{message}</Alert>}
             {<Modal
                 open={showEditModal}
                 onClose={closeEditModal}
@@ -88,6 +100,8 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 alignItems: 'center',
+                borderTop: 1, 
+                borderColor: 'divider'
             }}>
                 <TextField
                     style={{ width: "200px", margin: "5px" }}

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, TextField, Paper, Button, Divider, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import React, {useState, useEffect} from 'react';
+import { Box, TextField, Paper, Button, Divider, Select, MenuItem, SelectChangeEvent, Alert } from '@mui/material';
 import useRecipe from './hooks/useRecipe';
 import Recipe from '../types/Recipe';
 import Ingredient from '../types/Ingredient';
@@ -76,6 +76,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
         )
     };
 
+    const [message, setMessage] = useState('');
     const saveRecipe = () => {
         const recipeToSave: Recipe = {
             name: recipe.name,
@@ -88,10 +89,18 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
             recipe: recipeToSave
         });
         afterSubmit && afterSubmit();
+        setMessage('Recipe Saved!');
     };
 
+    useEffect(() => {
+        setTimeout(() => {
+            setMessage('');
+        }, 2000);
+    }, [message]);
+
     return (
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', clear: 'both', margin: '20px' }}>
+            {message && <Alert severity="info">{message}</Alert>}
             <Paper>
                 <form>
                     <TextField
@@ -104,7 +113,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                         id='name'
                     />
                     <Divider />
-                    <h3>Ingredients</h3>
+                    <h3 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Ingredients</h3>
                     <TextField
                         style={{ width: "200px", margin: "5px" }}
                         type="number"
@@ -121,7 +130,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                         for (let i = 0; i < recipe.ingredients.length; i++) {
                             result.push(
                                 <div key={i}>
-                                    <h4>Ingredient {i + 1}</h4>
+                                    <h4 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Ingredient {i + 1}</h4>
                                     <TextField
                                         style={{ width: "200px", margin: "5px" }}
                                         type="text"
@@ -162,7 +171,7 @@ const RecipeForm = ({ defaultRecipe, afterSubmit }: Props): JSX.Element => {
                     })()}
 
                     <Divider />
-                    <h3>Method</h3>
+                    <h3 style={{ fontFamily: 'cursive', marginLeft: '10px'}}>Method</h3>
                     <TextField
                         style={{ width: "200px", margin: "5px" }}
                         type="text"
