@@ -40,6 +40,8 @@ jobs:
       - name: Node Build
         run: npm run node-tsc
         
+        
+      # TODO the cypress setup as a step here isn't quite working to connect to Mongo
       - name: Start Mongo & App for Cypress
         run: docker-compose up -d
         
