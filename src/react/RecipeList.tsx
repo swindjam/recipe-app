@@ -58,7 +58,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         const target = getTarget(event);
 
         setShowEditModal(true);
-        const recipe: Recipe | undefined = recipes.find(r => r.id === parseInt(target.id));
+        const recipe: Recipe | undefined = recipes.find(r => r.id === target.id);
         if (typeof recipe !== 'undefined') {
             setSelectedRecipe(recipe);
         }
@@ -73,7 +73,7 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
         const target = getTarget(event);
 
         await postData('http://localhost:8081/delete', {
-            recipe_name: parseInt(target.id)
+            recipe_name: target.id
         });
 
         setMessage('Recipe deleted!');
@@ -177,12 +177,12 @@ const RecipeList = ({ recipes: defaultRecipes }: Props): JSX.Element => {
                                     </TableCell>
                                     <TableCell>
                                         <Tooltip title="Edit">
-                                            <IconButton onClick={showEditRecipeModal} id={String(recipe.id)}>
+                                            <IconButton onClick={showEditRecipeModal} id={recipe.id}>
                                                 <Edit />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Delete">
-                                            <IconButton onClick={deleteRecipe} id={String(recipe.id)}>
+                                            <IconButton onClick={deleteRecipe} id={recipe.id}>
                                                 <Delete />
                                             </IconButton>
                                         </Tooltip>

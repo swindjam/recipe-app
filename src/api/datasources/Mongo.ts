@@ -49,8 +49,7 @@ export default class MongoDataSource implements DataSource {
 
     async addRecipe(recipe: Recipe): Promise<void> {
         const id = new mongoose.Types.ObjectId().id;
-        recipe.id = parseInt(String(id));
-        console.log(recipe);
+        recipe.id = String(id);
         await this.recipeModel.create(recipe);
     }
 
