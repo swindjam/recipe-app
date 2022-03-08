@@ -11,7 +11,7 @@ export default () : Model<Recipe> => {
         unit: String
     });
     const Recipe = new Schema({
-        id: number,
+        id: Number,
         name: String,
         ingredients: [Ingredient],
         steps: [String]
