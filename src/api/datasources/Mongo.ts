@@ -1,37 +1,49 @@
 import mongoose, { Model } from 'mongoose';
-import { compileFunction } from 'vm';
+import { Logger } from 'winston';
 import DataSource from "../../types/DataSource";
 import Recipe from '../../types/Recipe';
 import getRecipeModel from './getRecipeModel';
 
+interface Config {
+    url: string;
+    user: string;
+    pwd: string;
+}
+
 export default class MongoDataSource implements DataSource {
 
     protected recipeModel: Model<Recipe>;
+    protected logger: Logger;
+    protected config: Config;
 
-    constructor() {
+    constructor(logger: Logger) {
+        this.config = {
+            url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+            user: String(process.env.DB_USER),
+            pwd: String(process.env.DB_PASSWORD)
+        };
+        this.logger = logger;
         this.connectToDB();
         this.recipeModel = getRecipeModel();
     }
 
     async connectToDB(): Promise<void> {
-        const config = {
-            url: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-            user: process.env.DB_USER,
-            pwd: process.env.DB_PASSWORD
-        };
-
         try {
-            console.log('Connecting to DB', config);
+            this.logger.log('Connecting to DB', this.config);
             await mongoose.connect(
-                config.url,
+                this.config.url,
                 {
-                    user: config.user,
-                    pass: config.pwd
+                    user: this.config.user,
+                    pass: this.config.pwd
                 }
             );
         } catch (e) {
-            console.log(`Failed to connect to DB - ${e}`);
+            this.logger.log(`Failed to connect to DB - ${e}`, {});
         }
+    }
+
+    async disconnectFromDB() : Promise<void> {
+        await mongoose.disconnect();
     }
 
     async addRecipe(recipe: Recipe): Promise<void> {

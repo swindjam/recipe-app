@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import {createLogger, format, transports} from 'winston';
 import index from './routes/index';
 import searchRecipes from './routes/searchRecipes';
 import addRecipe from './routes/addRecipe';
@@ -19,7 +20,12 @@ app.use((req, res, next) => {
 });
 
 // Setup routes
-const dataSource = new MongoDataSource();
+const logger = createLogger({
+  level: 'info',
+  format: format.json(),
+  transports: [new transports.Console()]
+});
+const dataSource = new MongoDataSource(logger);
 
 app.get('/', index(dataSource));
 app.get('/search', searchRecipes(dataSource));
@@ -28,5 +34,15 @@ app.post('/update', updateRecipe(dataSource));
 app.post('/delete', deleteRecipe(dataSource));
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
+    logger.log(`App listening on port ${port}`, {});
 });
+
+const shutdown = (exitCode: number) : void => {
+   logger.log('Server shutting down', {});
+   dataSource.disconnectFromDB();
+   process.exit(exitCode + 128);
+};
+
+process.on('SIGINT', () => shutdown(2));
+process.on('SIGABRT', () => shutdown(6));
+process.on('SIGTERM', () => shutdown(15));

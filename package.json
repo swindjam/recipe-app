@@ -9,7 +9,9 @@
     "node-live": "NODE_ENV=production webpack --config webpack/webpack.config.node.live.ts",
     "api": "nodemon --watch build/js/node --inspect=0.0.0.0:9229 build/js/node/api.js",
     "cypress": "cypress open --config-file cypress.json",
-    "dev-server": "tsc-watch --project tsconfig.node.json --onSuccess \"node ./build/js/node/api/server.js\""
+    "dev-server": "tsc-watch --project tsconfig.node.json --onSuccess \"node ./build/js/node/api/server.js\"",
+    "test": "jest --watch",
+    "test-ci": "jest --bail"
   },
   "author": "James Swindley",
   "license": "ISC",
@@ -38,6 +40,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@babel/register": "^7.17.0",
     "@babel/runtime": "^7.17.2",
+    "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
@@ -55,6 +58,7 @@
     "eslint-plugin-react": "^7.29.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "html-webpack-plugin": "^5.5.0",
+    "jest-cli": "^27.5.1",
     "mini-css-extract-plugin": "^2.6.0",
     "node-gyp": "^9.0.0",
     "nodemon": "^2.0.15",

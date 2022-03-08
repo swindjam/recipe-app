@@ -1,7 +1,7 @@
 import ValuesStateAction from "../../types/ValuesStateAction";
 
-export default (state: Record<string,string>, action: ValuesStateAction): Record<string,string> => {
-    const { type, property, value} = action;
+export default (state: Record<string, string>, action: ValuesStateAction): Record<string, string | number> => {
+    const { type, property, value, defaultValues } = action;
 
     switch (type) {
         case 'update':
@@ -13,7 +13,7 @@ export default (state: Record<string,string>, action: ValuesStateAction): Record
             }
             return state;
         case 'reset':
-            return state;
+            return defaultValues;
         default:
             return state;
     }

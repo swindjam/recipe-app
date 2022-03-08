@@ -123,6 +123,7 @@ const RecipeForm = ({ recipe: defaultRecipe, afterSubmit, updateExistingRecipe }
                         InputProps={{ inputProps: { min: 0 } }}
                         value={recipe.ingredients.length}
                         onInput={updateTotalIngredients}
+                        id="numberOfIngredients"
                     />
                     <br />
                     {(() => {
