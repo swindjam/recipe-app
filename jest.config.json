@@ -1,5 +1,16 @@
 {
     "roots": [
         "./src"
-    ]
+    ],
+    "moduleNameMapper": {
+        "\\.(css)$": "identity-obj-proxy"
+    },
+    "setupFilesAfterEnv": [
+        "<rootDir>/jestSetup.js"
+    ],
+    "verbose": true,
+    "testEnvironment": "node",
+    "transform": {
+        "^.+\\.(js|ts|tsx)$": ["babel-jest", { "rootMode": "upward" }]
+    }
 }
