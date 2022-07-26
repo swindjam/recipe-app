@@ -16,7 +16,9 @@
     "prod-server": "node ./build/js/node/api/server.js",
     "test": "jest --watch",
     "test-ci": "jest --bail",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "storybook": "start-storybook -s build -p 6006",
+    "build-storybook": "build-storybook -o build/storybook"
   },
   "author": "James Swindley",
   "license": "ISC",
@@ -25,6 +27,11 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.4",
     "@mui/material": "^5.4.4",
+    "@storybook/addon-a11y": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/builder-webpack5": "^6.5.9",
+    "@storybook/manager-webpack5": "^6.5.9",
+    "@storybook/react": "^6.5.9",
     "@types/mustache": "^4.1.2",
     "express": "^4.17.3",
     "mongodb": "^4.4.1",
@@ -34,6 +41,7 @@
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "storybook-mobile": "^1.0.0",
     "winston": "^3.6.0"
   },
   "devDependencies": {

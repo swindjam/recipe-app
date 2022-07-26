@@ -9,7 +9,7 @@ import useValues from './hooks/useValues';
 import RecipeForm from './RecipeForm';
 import getTarget from './helpers/getTarget';
 
-interface Props {
+export interface Props {
     recipes: Recipe[]
 }
 
